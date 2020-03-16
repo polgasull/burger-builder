@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import Radium, { StyleRoot } from 'radium';
+
+import styles from './App.module.scss';
 import Person from './Person/Person';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
@@ -60,20 +60,8 @@ class App extends Component {
   }
 
   render() {
-    const buttonStyle = {
-      backgroundColor: 'green', 
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    }
-
     let persons = false; 
+    let btnClass = [styles.button]; 
 
     if ( this.state.showPersons ) {
       persons = (
@@ -88,45 +76,40 @@ class App extends Component {
           })}
         </div>
       );
-      buttonStyle.backgroundColor = 'red';
-      buttonStyle[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
+
+      btnClass.push(styles.red)
     }
 
-    const classes = []
+    const assignedClasses = []
     if (this.state.persons.length <= 2) {
-      classes.push('red'); // ['red']
+      assignedClasses.push(styles.red); // ['red']
     } 
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); // ['red', 'bold']
+      assignedClasses.push(styles.bold); // ['red', 'bold']
     } 
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <h1> Hello I'm a react app </h1>  
-          <p className={classes.join(' ')}>This is really working!</p>
-          
-          <button style={buttonStyle} key="key1" onClick={this.togglePersonsHandler}> Toggle content! </button>
+      <div className={styles.App}>
+        <h1> Hello I'm a react app </h1>  
+        <p className={assignedClasses.join(' ')}>This is really working!</p>
+        
+        <button className={btnClass.join(' ')} key="key1" onClick={this.togglePersonsHandler}> Toggle content! </button>
 
-          { persons }
+        { persons }
 
-          <div>
-            <UserInput changed={ this.addUserName}/>
-            <button style={buttonStyle} key="key2" onClick={this.addUserName}> Add UserName </button>
-          </div>
-
-          <div>
-            <UserOutput username={this.state.users[0].username } />  
-            <UserOutput username={this.state.users[1].username }/>  
-          </div>
-
+        <div>
+          <UserInput changed={ this.addUserName}/>
+          <button className={btnClass.join(' ')} key="key2" onClick={this.addUserName}> Add UserName </button>
         </div>
-      </StyleRoot>
+
+        <div>
+          <UserOutput username={this.state.users[0].username } />  
+          <UserOutput username={this.state.users[1].username }/>  
+        </div>
+
+      </div>
     );
   }
 }
 
-export default Radium(App);
+export default App;
