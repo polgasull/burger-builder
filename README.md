@@ -1,3 +1,3 @@
-Init Project
+Init Project on Heroku
 
-https://puzzle15-wed-pgn.herokuapp.com/
+https://burger-react-pgn.herokuapp.com/
