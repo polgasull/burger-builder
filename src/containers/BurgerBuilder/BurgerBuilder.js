@@ -8,25 +8,17 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import axios from '../../axios-orders';
 import * as burgerBuilderActions from '../../store/actions/index';
+import axios from '../../axios-orders';
 
 class BurgerBuilder extends Component {
   state = {
     purchasable: false,
     purchasing: false,
-    loading: false,
-    error: false
   }
 
   componentDidMount () {
-    axios.get('/ingredients.json')
-      .then(response => {
-        this.setState({ingredients: response.data})
-      })
-      .catch(error => {
-        this.setState({error: true})
-      });
+
   }
 
   updatePurchaseState = (ingredients) => {
@@ -61,6 +53,7 @@ class BurgerBuilder extends Component {
     }
     let orderSummary = null;
     let burger = this.state.error ? <p>Ingredients can't be loaded!</p> : <Spinner />;
+
     if (this.props.ings) {
       burger = (
         <Aux>
@@ -79,10 +72,6 @@ class BurgerBuilder extends Component {
         purchaseCanceled={this.purchaseHandler} 
         purchaseContinued={this.purchaseContinueHandler}
         price={this.props.price} />
-    }
-
-    if (this.state.loading) {
-      orderSummary = <Spinner />
     }
 
     return(
